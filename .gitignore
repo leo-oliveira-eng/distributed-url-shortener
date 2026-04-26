@@ -418,6 +418,9 @@ FodyWeavers.xsd
 # Local History for Visual Studio Code
 .history/
 
+# Windsurf local workflows and rules
+.windsurf/
+
 # Built Visual Studio Code Extensions
 *.vsix
 
