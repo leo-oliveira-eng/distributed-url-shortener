@@ -70,6 +70,18 @@ Client (Browser)
                                                 +-- ClickHouse
 ```
 
+## Roadmap
+
+The implementation roadmap lives in [`docs/roadmap.md`](docs/roadmap.md). It
+breaks the project into incremental phases, from repository foundation and local
+infrastructure through Shortener API, Redirect Service, analytics workers,
+dashboard APIs, Angular frontend, observability, load testing, and final
+showcase documentation.
+
+The roadmap is aligned with the project constitution, especially the
+independence of the redirect fast path, separate runtime execution models,
+query-driven Cassandra modeling and non-blocking analytics.
+
 ## Core Design Principles
 
 - **Redirect fast path independence:** redirects do not depend on authentication, the API Gateway, dashboard queries, or analytics processing.

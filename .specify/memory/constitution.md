@@ -1,12 +1,9 @@
 <!--
 Sync Impact Report
-Version change: 1.2.0 -> 1.2.0
+Version change: 1.0.0 -> 1.0.1
 Modified principles:
-- II. Redirect Fast Path Independence: clarified Redirect Service independence
-  from ApiGateway and Shortener API
-- IV. Non-Blocking Analytics Pipeline: added minimal ClickEvent schema
-- VI. Separate Runtime Execution Models: clarified Shortener API and Redirect
-  Service separation
+- I. Portfolio-Grade Distributed System Clarity: added an English-only
+  documentation constraint
 Added principles:
 - None
 Added sections:
@@ -14,13 +11,18 @@ Added sections:
 Removed sections:
 - None
 Templates requiring updates:
-- updated: .specify/templates/plan-template.md
-- updated: .specify/templates/spec-template.md
-- updated: .specify/templates/tasks-template.md
-- updated: .specify/templates/checklist-template.md
+- reviewed: .specify/templates/plan-template.md; future generated docs must be
+  English
+- reviewed: .specify/templates/spec-template.md; future generated docs must be
+  English
+- reviewed: .specify/templates/tasks-template.md; future generated docs must be
+  English
+- reviewed: .specify/templates/checklist-template.md; future generated docs
+  must be English
 - not present: .specify/templates/commands/*.md
 Runtime guidance:
-- reviewed: README.md; no principle references required an update
+- updated: README.md with a roadmap section
+- updated: docs/roadmap.md translated to English
 Deferred TODOs:
 - None
 -->
@@ -42,6 +44,11 @@ belongs under `src/ApiGateway`, `src/User`, `src/Shortener`, and
 Angular. Infrastructure configuration belongs under `infra/`, documentation
 under `docs/`, scripts under `scripts/`, and load, integration, and end-to-end
 tests under `tests/`.
+
+All project documentation MUST be written in English. This includes the README,
+files under `docs/`, specifications, implementation plans, generated task lists,
+architecture decision records, and operational runbooks. Existing documentation
+written in another language MUST be migrated to English when touched.
 
 Rationale: the project exists to demonstrate architecture and engineering
 judgment. Hidden coupling, generic common layers, or unexplained abstractions
