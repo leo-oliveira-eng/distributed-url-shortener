@@ -10,6 +10,7 @@
 - Added the initial project constitution defining architecture principles, runtime boundaries, redirect fast path rules, analytics pipeline constraints, observability expectations, and repository governance.
 - Added initial monorepo service placeholders for the Angular frontend, Shortener bounded context, and Statistics services.
 - Added test folder scaffolding for end-to-end, integration, and load testing.
+- Added the Phase 0 Repository Foundation specification and planning artifacts under `specs/001-repo-foundation/`.
 
 ### Changed
 

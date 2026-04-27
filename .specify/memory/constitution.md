@@ -1,6 +1,5 @@
 <!--
 Sync Impact Report
-Version change: 1.0.0 -> 1.0.1
 Modified principles:
 - I. Portfolio-Grade Distributed System Clarity: added an English-only
   documentation constraint
