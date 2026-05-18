@@ -26,8 +26,8 @@
 - `src/ApiGateway/`
 - `src/User/`
 - `src/Shortener/`
-- `src/Shortener/DistributedUrlShortener.Shortener.Api/`
-- `src/Shortener/DistributedUrlShortener.Redirect.Service/`
+- `src/Shortener/Shortener.Api/`
+- `src/Shortener/Redirect.Service/`
 - `src/Statistics/statistics_api/`
 - `src/Statistics/statistics_event_writer/`
 - `src/Statistics/statistics_batch_processor/`

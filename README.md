@@ -25,8 +25,8 @@ src/
   ApiGateway/
   User/
   Shortener/
-    DistributedUrlShortener.Shortener.Api/
-    DistributedUrlShortener.Redirect.Service/
+    Shortener.Api/
+    Redirect.Service/
   Statistics/
     statistics_api/
     statistics_event_writer/

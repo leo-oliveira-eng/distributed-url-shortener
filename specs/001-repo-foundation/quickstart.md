@@ -59,7 +59,7 @@ Run one API shell at a time, then request `/health` from the configured port.
 The exact ports should come from `.env.example` and `docker-compose.yml`.
 
 ```powershell
-dotnet run --project src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj
+dotnet run --project src/Shortener/Shortener.Api/Shortener.Api.csproj
 ```
 
 ```powershell
@@ -68,7 +68,7 @@ Invoke-WebRequest http://localhost:<shortener-api-port>/health
 
 Repeat for:
 
-- `src/Shortener/DistributedUrlShortener.Redirect.Service/`
+- `src/Shortener/Redirect.Service/`
 
 Expected result: each applicable API shell returns a successful health response.
 For Redirect Service, `/health` is the only allowed Phase 0 endpoint; `GET

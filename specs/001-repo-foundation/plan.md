@@ -129,11 +129,11 @@ src/
   ApiGateway/
   User/
   Shortener/
-    DistributedUrlShortener.Shortener.Api/
-      DistributedUrlShortener.Shortener.Api.csproj
+    Shortener.Api/
+      Shortener.Api.csproj
       Program.cs
-    DistributedUrlShortener.Redirect.Service/
-      DistributedUrlShortener.Redirect.Service.csproj
+    Redirect.Service/
+      Redirect.Service.csproj
       Program.cs
   Statistics/
     pyproject.toml

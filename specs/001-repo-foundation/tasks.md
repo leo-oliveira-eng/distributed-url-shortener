@@ -65,8 +65,8 @@
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create `src/Shortener/DistributedUrlShortener.Shortener.Api/` for the Shortener API runtime shell.
-- [ ] T013 [P] [US1] Create `src/Shortener/DistributedUrlShortener.Redirect.Service/` for the Redirect Service runtime shell.
+- [ ] T012 [P] [US1] Create `src/Shortener/Shortener.Api/` for the Shortener API runtime shell.
+- [ ] T013 [P] [US1] Create `src/Shortener/Redirect.Service/` for the Redirect Service runtime shell.
 - [ ] T014 [P] [US1] Create `src/Statistics/statistics_api/` for the Statistics.Api Python FastAPI shell.
 - [ ] T015 [P] [US1] Create `src/Statistics/statistics_event_writer/` for the Statistics.EventWriter.Worker Python worker shell.
 - [ ] T016 [P] [US1] Create `src/Statistics/statistics_batch_processor/` for the Statistics.BatchProcessor.Worker Python worker shell.
@@ -86,14 +86,14 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create minimal web project file `src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj`.
-- [ ] T021 [P] [US2] Create minimal web project file `src/Shortener/DistributedUrlShortener.Redirect.Service/DistributedUrlShortener.Redirect.Service.csproj`.
+- [ ] T020 [P] [US2] Create minimal web project file `src/Shortener/Shortener.Api/Shortener.Api.csproj`.
+- [ ] T021 [P] [US2] Create minimal web project file `src/Shortener/Redirect.Service/Redirect.Service.csproj`.
 - [ ] T022 [P] [US2] Create minimal Python project configuration `src/Statistics/pyproject.toml` for Statistics shells using Python 3.12+, including FastAPI and the minimal server dependency for Statistics.Api.
 - [ ] T023 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_api/__init__.py`.
 - [ ] T024 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_event_writer/__init__.py`.
 - [ ] T025 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_batch_processor/__init__.py`.
-- [ ] T026 [P] [US2] Create minimal health-only startup in `src/Shortener/DistributedUrlShortener.Shortener.Api/Program.cs`.
-- [ ] T027 [P] [US2] Create minimal `/health`-only startup in `src/Shortener/DistributedUrlShortener.Redirect.Service/Program.cs` without `GET /{shortCode}`, redirect logic, cache lookup, or event publishing.
+- [ ] T026 [P] [US2] Create minimal health-only startup in `src/Shortener/Shortener.Api/Program.cs`.
+- [ ] T027 [P] [US2] Create minimal `/health`-only startup in `src/Shortener/Redirect.Service/Program.cs` without `GET /{shortCode}`, redirect logic, cache lookup, or event publishing.
 - [ ] T028 [P] [US2] Create minimal health-only FastAPI startup in `src/Statistics/statistics_api/main.py`.
 - [ ] T029 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_event_writer/main.py` that starts without consuming events.
 - [ ] T030 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_batch_processor/main.py` that starts without scheduling jobs or processing batches.
@@ -102,8 +102,8 @@
 - [ ] T033 [US2] Ensure Shortener API and Redirect Service project files use environment-based configuration and nullable reference types where applicable.
 - [ ] T034 [US2] Run `dotnet restore DistributedUrlShortener.sln` from the repository root.
 - [ ] T035 [US2] Run `dotnet build DistributedUrlShortener.sln --no-restore` from the repository root.
-- [ ] T036 [US2] Manually verify `/health` for `src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj`.
-- [ ] T037 [US2] Manually verify `/health` for `src/Shortener/DistributedUrlShortener.Redirect.Service/DistributedUrlShortener.Redirect.Service.csproj`.
+- [ ] T036 [US2] Manually verify `/health` for `src/Shortener/Shortener.Api/Shortener.Api.csproj`.
+- [ ] T037 [US2] Manually verify `/health` for `src/Shortener/Redirect.Service/Redirect.Service.csproj`.
 - [ ] T038 [US2] Install or run the Python Statistics shells according to `src/Statistics/pyproject.toml` and manually verify `/health` for `src/Statistics/statistics_api/main.py`.
 - [ ] T039 [US2] Verify worker shells start without performing business work in `src/Statistics/statistics_event_writer/main.py` and `src/Statistics/statistics_batch_processor/main.py`.
 
@@ -158,7 +158,7 @@
 **Purpose**: Cross-cutting quality gates that affect multiple user stories.
 
 - [ ] T056 [P] Verify all generated project docs and project-doc comments are in English in `README.md`, `docs/architecture.md`, `docs/tradeoffs.md`, `CHANGELOG.md`, and `specs/001-repo-foundation/tasks.md`.
-- [ ] T057 [P] Verify no later-phase business behavior exists in `src/Shortener/DistributedUrlShortener.Shortener.Api/Program.cs`, `src/Shortener/DistributedUrlShortener.Redirect.Service/Program.cs`, `src/Statistics/statistics_api/main.py`, `src/Statistics/statistics_event_writer/main.py`, `src/Statistics/statistics_batch_processor/main.py`, and `src/Statistics/shared/__init__.py`.
+- [ ] T057 [P] Verify no later-phase business behavior exists in `src/Shortener/Shortener.Api/Program.cs`, `src/Shortener/Redirect.Service/Program.cs`, `src/Statistics/statistics_api/main.py`, `src/Statistics/statistics_event_writer/main.py`, `src/Statistics/statistics_batch_processor/main.py`, and `src/Statistics/shared/__init__.py`.
 - [ ] T058 Verify quickstart steps in `specs/001-repo-foundation/quickstart.md` from a clean terminal session.
 - [ ] T059 Verify acceptance criteria from `specs/001-repo-foundation/spec.md` against the final repository state.
 - [ ] T060 Run `git status --short` and review changed files to confirm no unrelated user work was reverted.
@@ -205,8 +205,8 @@
 ## Parallel Example: User Story 2
 
 ```text
-Task: "Create minimal web project file src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj"
-Task: "Create minimal web project file src/Shortener/DistributedUrlShortener.Redirect.Service/DistributedUrlShortener.Redirect.Service.csproj"
+Task: "Create minimal web project file src/Shortener/Shortener.Api/Shortener.Api.csproj"
+Task: "Create minimal web project file src/Shortener/Redirect.Service/Redirect.Service.csproj"
 Task: "Create minimal Python project configuration src/Statistics/pyproject.toml"
 Task: "Create minimal Python health shell src/Statistics/statistics_api/main.py"
 Task: "Create minimal Python worker shell src/Statistics/statistics_event_writer/main.py"

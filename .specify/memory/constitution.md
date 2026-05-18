@@ -3,6 +3,8 @@ Sync Impact Report
 Modified principles:
 - I. Portfolio-Grade Distributed System Clarity: added an English-only
   documentation constraint
+- Architecture Constraints: aligned canonical Statistics package paths with the
+  implemented Python runtime structure
 Added principles:
 - None
 Added sections:
@@ -14,14 +16,20 @@ Templates requiring updates:
   English
 - reviewed: .specify/templates/spec-template.md; future generated docs must be
   English
-- reviewed: .specify/templates/tasks-template.md; future generated docs must be
-  English
+- updated: .specify/templates/plan-template.md; Statistics paths use
+  statistics_api, statistics_event_writer, statistics_batch_processor, and
+  shared
+- updated: .specify/templates/tasks-template.md; Statistics paths use
+  statistics_api, statistics_event_writer, statistics_batch_processor, and
+  shared
 - reviewed: .specify/templates/checklist-template.md; future generated docs
   must be English
 - not present: .specify/templates/commands/*.md
 Runtime guidance:
 - updated: README.md with a roadmap section
 - updated: docs/roadmap.md translated to English
+- updated: Phase 0 docs/specs to use Shortener.Api and Redirect.Service project
+  paths
 Deferred TODOs:
 - None
 -->
@@ -188,10 +196,10 @@ MUST be composed of independent applications:
 
 ```text
 src/Statistics/
-  DistributedUrlShortener.Statistics.Api/
-  DistributedUrlShortener.Statistics.EventWriter.Worker/
-  DistributedUrlShortener.Statistics.BatchProcessor.Worker/
-  DistributedUrlShortener.Statistics.Infrastructure/
+  statistics_api/
+  statistics_event_writer/
+  statistics_batch_processor/
+  shared/
 ```
 
 Statistics.Api (Dashboard API) MUST expose dashboard endpoints, query ClickHouse
@@ -225,10 +233,10 @@ src/
   User/
   Shortener/
   Statistics/
-    DistributedUrlShortener.Statistics.Api/
-    DistributedUrlShortener.Statistics.EventWriter.Worker/
-    DistributedUrlShortener.Statistics.BatchProcessor.Worker/
-    DistributedUrlShortener.Statistics.Infrastructure/
+    statistics_api/
+    statistics_event_writer/
+    statistics_batch_processor/
+    shared/
   Front/
 infra/
   nginx/
@@ -319,4 +327,4 @@ redirect path independence, separate runtime execution models, frontend/API
 Gateway separation, Cassandra modeling, analytics non-blocking behavior,
 observability, testing, reproducible local setup, and documentation impacts.
 
-**Version**: 1.0.0 | **Ratified**: 2026-04-26 | **Last Amended**: 2026-04-26
+**Version**: 1.0.1 | **Ratified**: 2026-04-26 | **Last Amended**: 2026-05-18

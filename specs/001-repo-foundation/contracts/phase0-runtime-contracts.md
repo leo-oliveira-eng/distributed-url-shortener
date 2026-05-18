@@ -7,8 +7,8 @@ product behavior from later phases.
 
 `DistributedUrlShortener.sln` must include:
 
-- `src/Shortener/DistributedUrlShortener.Shortener.Api/`
-- `src/Shortener/DistributedUrlShortener.Redirect.Service/`
+- `src/Shortener/Shortener.Api/`
+- `src/Shortener/Redirect.Service/`
 
 `DistributedUrlShortener.sln` must not include any Python Statistics project or
 package.
