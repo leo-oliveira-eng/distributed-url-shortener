@@ -353,6 +353,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 **/__pycache__/
 *.pyc
+*.egg-info/
 
 # Cake - Uncomment if you are using it
 #tools/**
@@ -419,7 +420,7 @@ FodyWeavers.xsd
 .history/
 
 # Windsurf local workflows and rules
-.windsurf/
+#.windsurf/
 
 # Built Visual Studio Code Extensions
 *.vsix

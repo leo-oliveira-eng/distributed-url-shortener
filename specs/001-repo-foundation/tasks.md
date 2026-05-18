@@ -3,7 +3,7 @@
 **Input**: Design documents from `/specs/001-repo-foundation/`
 **Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/phase0-runtime-contracts.md, quickstart.md
 
-**Tests**: Phase 0 has no business rules, frontend behavior, infrastructure boundaries, e2e flows, redirect traffic behavior, cache lookup, or event publishing to test. Required verification is limited to solution build, API shell `/health` checks, Compose configuration rendering, documentation review, and out-of-scope behavior checks.
+**Tests**: Phase 0 has no business rules, frontend behavior, infrastructure boundaries, e2e flows, redirect traffic behavior, cache lookup, event publishing, event consumption, scheduling, or batch processing to test. Required verification is limited to Shortener solution build, Python Statistics shell install/run checks, API shell `/health` checks, Compose configuration rendering, documentation review, and out-of-scope behavior checks.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -18,10 +18,10 @@
 - ApiGateway: `src/ApiGateway/`
 - User service: `src/User/`
 - Shortener API / Redirect Service: `src/Shortener/`
-- Statistics.Api (Dashboard API): `src/Statistics/DistributedUrlShortener.Statistics.Api/`
-- Statistics.EventWriter.Worker: `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/`
-- Statistics.BatchProcessor.Worker: `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/`
-- Statistics.Infrastructure: `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/`
+- Statistics.Api (Python FastAPI shell): `src/Statistics/statistics_api/`
+- Statistics.EventWriter.Worker (Python worker shell): `src/Statistics/statistics_event_writer/`
+- Statistics.BatchProcessor.Worker (Python worker shell): `src/Statistics/statistics_batch_processor/`
+- Statistics shared package/module: `src/Statistics/shared/`
 - Frontend: `src/Front/`
 - Infrastructure: `infra/`
 - Documentation: `docs/`
@@ -67,10 +67,10 @@
 
 - [ ] T012 [P] [US1] Create `src/Shortener/DistributedUrlShortener.Shortener.Api/` for the Shortener API runtime shell.
 - [ ] T013 [P] [US1] Create `src/Shortener/DistributedUrlShortener.Redirect.Service/` for the Redirect Service runtime shell.
-- [ ] T014 [P] [US1] Create `src/Statistics/DistributedUrlShortener.Statistics.Api/` for the Statistics.Api runtime shell.
-- [ ] T015 [P] [US1] Create `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/` for the Statistics.EventWriter.Worker runtime shell.
-- [ ] T016 [P] [US1] Create `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/` for the Statistics.BatchProcessor.Worker runtime shell.
-- [ ] T017 [P] [US1] Create `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/` for the non-runtime Statistics.Infrastructure class library.
+- [ ] T014 [P] [US1] Create `src/Statistics/statistics_api/` for the Statistics.Api Python FastAPI shell.
+- [ ] T015 [P] [US1] Create `src/Statistics/statistics_event_writer/` for the Statistics.EventWriter.Worker Python worker shell.
+- [ ] T016 [P] [US1] Create `src/Statistics/statistics_batch_processor/` for the Statistics.BatchProcessor.Worker Python worker shell.
+- [ ] T017 [P] [US1] Create `src/Statistics/shared/` for shared Statistics Python package/module code with no business logic.
 - [ ] T018 [US1] Remove obsolete `.gitkeep` placeholders from folders that now contain real project files under `src/Shortener/` and `src/Statistics/`.
 - [ ] T019 [US1] Verify repository structure against `specs/001-repo-foundation/spec.md` and `specs/001-repo-foundation/data-model.md`.
 
@@ -80,34 +80,34 @@
 
 ## Phase 4: User Story 2 - Build Initial Runtime Shells (Priority: P1)
 
-**Goal**: A developer can build the initial solution and verify that every Phase 0 runtime shell is represented as a separate application without any later-phase business behavior.
+**Goal**: A developer can build the Shortener .NET solution and verify that every Statistics Python shell is represented as a separate runnable application without any later-phase business behavior.
 
-**Independent Test**: Open `DistributedUrlShortener.sln`, run the documented build command, and confirm all Phase 0 projects compile successfully.
+**Independent Test**: Open `DistributedUrlShortener.sln`, run the documented .NET build command for Shortener projects, then run the documented Python install/start checks for Statistics shells.
 
 ### Implementation for User Story 2
 
 - [ ] T020 [P] [US2] Create minimal web project file `src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj`.
 - [ ] T021 [P] [US2] Create minimal web project file `src/Shortener/DistributedUrlShortener.Redirect.Service/DistributedUrlShortener.Redirect.Service.csproj`.
-- [ ] T022 [P] [US2] Create minimal web project file `src/Statistics/DistributedUrlShortener.Statistics.Api/DistributedUrlShortener.Statistics.Api.csproj`.
-- [ ] T023 [P] [US2] Create minimal worker project file `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/DistributedUrlShortener.Statistics.EventWriter.Worker.csproj`.
-- [ ] T024 [P] [US2] Create minimal worker project file `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/DistributedUrlShortener.Statistics.BatchProcessor.Worker.csproj`.
-- [ ] T025 [P] [US2] Create non-executable class library project file `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/DistributedUrlShortener.Statistics.Infrastructure.csproj`.
+- [ ] T022 [P] [US2] Create minimal Python project configuration `src/Statistics/pyproject.toml` for Statistics shells using Python 3.12+, including FastAPI and the minimal server dependency for Statistics.Api.
+- [ ] T023 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_api/__init__.py`.
+- [ ] T024 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_event_writer/__init__.py`.
+- [ ] T025 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_batch_processor/__init__.py`.
 - [ ] T026 [P] [US2] Create minimal health-only startup in `src/Shortener/DistributedUrlShortener.Shortener.Api/Program.cs`.
 - [ ] T027 [P] [US2] Create minimal `/health`-only startup in `src/Shortener/DistributedUrlShortener.Redirect.Service/Program.cs` without `GET /{shortCode}`, redirect logic, cache lookup, or event publishing.
-- [ ] T028 [P] [US2] Create minimal health-only startup in `src/Statistics/DistributedUrlShortener.Statistics.Api/Program.cs`.
-- [ ] T029 [P] [US2] Create minimal executable startup in `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/Program.cs`.
-- [ ] T030 [P] [US2] Create minimal executable startup in `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/Program.cs`.
-- [ ] T031 [P] [US2] Create assembly marker type `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/AssemblyReference.cs` with no business logic.
-- [ ] T032 [US2] Add all Phase 0 project files to `DistributedUrlShortener.sln`.
-- [ ] T033 [US2] Ensure all API and worker project files use environment-based configuration and nullable reference types.
+- [ ] T028 [P] [US2] Create minimal health-only FastAPI startup in `src/Statistics/statistics_api/main.py`.
+- [ ] T029 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_event_writer/main.py` that starts without consuming events.
+- [ ] T030 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_batch_processor/main.py` that starts without scheduling jobs or processing batches.
+- [ ] T031 [P] [US2] Create minimal package marker `src/Statistics/shared/__init__.py` with no business logic.
+- [ ] T032 [US2] Add only the Shortener API and Redirect Service .NET project files to `DistributedUrlShortener.sln`.
+- [ ] T033 [US2] Ensure Shortener API and Redirect Service project files use environment-based configuration and nullable reference types where applicable.
 - [ ] T034 [US2] Run `dotnet restore DistributedUrlShortener.sln` from the repository root.
 - [ ] T035 [US2] Run `dotnet build DistributedUrlShortener.sln --no-restore` from the repository root.
 - [ ] T036 [US2] Manually verify `/health` for `src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj`.
 - [ ] T037 [US2] Manually verify `/health` for `src/Shortener/DistributedUrlShortener.Redirect.Service/DistributedUrlShortener.Redirect.Service.csproj`.
-- [ ] T038 [US2] Manually verify `/health` for `src/Statistics/DistributedUrlShortener.Statistics.Api/DistributedUrlShortener.Statistics.Api.csproj`.
-- [ ] T039 [US2] Verify worker shells start without consuming events in `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/Program.cs` and `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/Program.cs`.
+- [ ] T038 [US2] Install or run the Python Statistics shells according to `src/Statistics/pyproject.toml` and manually verify `/health` for `src/Statistics/statistics_api/main.py`.
+- [ ] T039 [US2] Verify worker shells start without performing business work in `src/Statistics/statistics_event_writer/main.py` and `src/Statistics/statistics_batch_processor/main.py`.
 
-**Checkpoint**: User Story 2 is complete when the solution builds and all runtime shells satisfy `specs/001-repo-foundation/contracts/phase0-runtime-contracts.md`.
+**Checkpoint**: User Story 2 is complete when the Shortener solution builds, the Statistics Python shells install or start, and all runtime shells satisfy `specs/001-repo-foundation/contracts/phase0-runtime-contracts.md`.
 
 ---
 
@@ -143,7 +143,7 @@
 - [ ] T048 [US4] Document authenticated API flow through ApiGateway in `docs/architecture.md`.
 - [ ] T049 [US4] Document planned high-level analytics flow in `docs/architecture.md` without claiming analytics implementation.
 - [ ] T050 [US4] Document why Redirect Service is separate from Shortener API in `docs/tradeoffs.md`.
-- [ ] T051 [US4] Document why Statistics.Api, Statistics.EventWriter.Worker, and Statistics.BatchProcessor.Worker are separate runtimes, and why Statistics.Infrastructure is a non-runtime class library, in `docs/tradeoffs.md`.
+- [ ] T051 [US4] Document why Statistics.Api, Statistics.EventWriter.Worker, and Statistics.BatchProcessor.Worker are separate Python runtimes, and why shared Statistics code is a Python package/module with no business logic, in `docs/tradeoffs.md`.
 - [ ] T052 [US4] Document why Phase 0 creates buildable shells before business behavior in `docs/tradeoffs.md`.
 - [ ] T053 [US4] Document known Phase 0 limitations and out-of-scope behavior in `docs/tradeoffs.md`.
 - [ ] T054 [US4] Update `README.md` only if needed to point to `docs/architecture.md`, `docs/tradeoffs.md`, and the Phase 0 local verification flow.
@@ -158,7 +158,7 @@
 **Purpose**: Cross-cutting quality gates that affect multiple user stories.
 
 - [ ] T056 [P] Verify all generated project docs and project-doc comments are in English in `README.md`, `docs/architecture.md`, `docs/tradeoffs.md`, `CHANGELOG.md`, and `specs/001-repo-foundation/tasks.md`.
-- [ ] T057 [P] Verify no later-phase business behavior exists in `src/Shortener/DistributedUrlShortener.Shortener.Api/Program.cs`, `src/Shortener/DistributedUrlShortener.Redirect.Service/Program.cs`, `src/Statistics/DistributedUrlShortener.Statistics.Api/Program.cs`, `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/Program.cs`, `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/Program.cs`, and `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/AssemblyReference.cs`.
+- [ ] T057 [P] Verify no later-phase business behavior exists in `src/Shortener/DistributedUrlShortener.Shortener.Api/Program.cs`, `src/Shortener/DistributedUrlShortener.Redirect.Service/Program.cs`, `src/Statistics/statistics_api/main.py`, `src/Statistics/statistics_event_writer/main.py`, `src/Statistics/statistics_batch_processor/main.py`, and `src/Statistics/shared/__init__.py`.
 - [ ] T058 Verify quickstart steps in `specs/001-repo-foundation/quickstart.md` from a clean terminal session.
 - [ ] T059 Verify acceptance criteria from `specs/001-repo-foundation/spec.md` against the final repository state.
 - [ ] T060 Run `git status --short` and review changed files to confirm no unrelated user work was reverted.
@@ -187,8 +187,8 @@
 ### Within Each User Story
 
 - Create or validate structure before removing placeholders.
-- Create project files before adding projects to the solution.
-- Create `Program.cs` files before build verification.
+- Create Shortener project files before adding Shortener projects to the solution.
+- Create startup files before build and run verification.
 - Align `.env.example` before validating `docker-compose.yml`.
 - Write architecture and trade-off docs before final changelog completion.
 
@@ -207,9 +207,10 @@
 ```text
 Task: "Create minimal web project file src/Shortener/DistributedUrlShortener.Shortener.Api/DistributedUrlShortener.Shortener.Api.csproj"
 Task: "Create minimal web project file src/Shortener/DistributedUrlShortener.Redirect.Service/DistributedUrlShortener.Redirect.Service.csproj"
-Task: "Create minimal web project file src/Statistics/DistributedUrlShortener.Statistics.Api/DistributedUrlShortener.Statistics.Api.csproj"
-Task: "Create minimal worker project file src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/DistributedUrlShortener.Statistics.EventWriter.Worker.csproj"
-Task: "Create minimal worker project file src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/DistributedUrlShortener.Statistics.BatchProcessor.Worker.csproj"
+Task: "Create minimal Python project configuration src/Statistics/pyproject.toml"
+Task: "Create minimal Python health shell src/Statistics/statistics_api/main.py"
+Task: "Create minimal Python worker shell src/Statistics/statistics_event_writer/main.py"
+Task: "Create minimal Python worker shell src/Statistics/statistics_batch_processor/main.py"
 ```
 
 ---
@@ -246,7 +247,7 @@ Task: "Create minimal worker project file src/Statistics/DistributedUrlShortener
 - Keep every task implementation in English when writing documentation or comments.
 - Do not implement URL creation, redirect resolution, event publishing, event writing, batch processing, dashboard queries, authentication, Angular frontend behavior, observability stack, or load tests.
 - Redirect Service must expose only `/health` in Phase 0; do not implement `GET /{shortCode}`, cache lookup, or event publishing.
-- `Statistics.Infrastructure` must remain a class library only and must not contain business logic in Phase 0.
+- Everything inside `src/Statistics/` must be Python project/package shells only, and shared Statistics code must contain no business logic in Phase 0.
 - `docker-compose.yml` must not include Cassandra, Redis, Redpanda, MinIO, ClickHouse, Keycloak, or observability services in Phase 0; Phase 1 must extend, not replace, the baseline.
 - Preserve existing user changes in `.gitignore` and `.windsurf/`.
-- Use `apply_patch` for manual edits and non-interactive `dotnet` commands for project and solution verification.
+- Use `apply_patch` for manual edits, non-interactive `dotnet` commands for Shortener solution verification, and non-interactive Python commands for Statistics shell verification.

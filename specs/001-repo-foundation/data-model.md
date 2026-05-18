@@ -33,22 +33,24 @@ runtime behavior.
 
 - `name`: Runtime display name
 - `projectPath`: Repository-relative project folder
-- `projectFile`: Project file path
+- `projectFile`: Project or package configuration file path
 - `entryPoint`: Minimal startup file
-- `runtimeKind`: `api`, `worker`, or `library`
+- `runtimeKind`: `api`, `worker`, or `shared-package`
+- `runtimeLanguage`: `.NET` for Shortener shells, `Python` for Statistics shells
 - `healthEndpoint`: Optional endpoint for API shells
 - `businessBehaviorAllowed`: Always `false` for Phase 0
 
 **Validation Rules**:
 
-- Application runtime shells must compile.
+- Shortener application runtime shells must compile.
+- Statistics application runtime shells must install or start with Python 3.12+.
 - Application runtime shells must have a minimal startup entry point.
 - API shells must expose a basic `/health` endpoint.
-- Worker shells must be executable projects, not class libraries.
-- `Statistics.Infrastructure` must be a supporting project and must not become
-  a standalone runtime or executable.
-- `Statistics.Infrastructure` must be a class library only and must not contain
-  business logic in Phase 0.
+- Worker shells must be executable application shells, not shared-only modules.
+- Shared Statistics code must be a Python package/module and must not become a
+  standalone runtime or executable.
+- The shared Statistics package/module must not contain business logic in Phase
+  0.
 
 ## Solution
 
@@ -57,14 +59,40 @@ runtime behavior.
 **Fields**:
 
 - `name`: `DistributedUrlShortener.sln`
-- `projects`: Shortener API, Redirect Service, Statistics.Api,
-  Statistics.EventWriter.Worker, Statistics.BatchProcessor.Worker,
-  Statistics.Infrastructure class library
+- `projects`: Shortener API, Redirect Service
 
 **Validation Rules**:
 
-- The solution must include every Phase 0 project.
+- The solution must include only the Phase 0 .NET projects that belong to the
+  Shortener bounded context.
+- Statistics Python shells must not be added to the .NET solution.
 - `dotnet build DistributedUrlShortener.sln` must complete successfully.
+
+## Statistics Python Package Set
+
+**Purpose**: Groups the Python-only Statistics API, worker shells, and shared
+package/module without adding them to the .NET solution.
+
+**Fields**:
+
+- `pythonVersion`: Python 3.12 or newer
+- `packageRoot`: `src/Statistics/`
+- `apiShell`: `src/Statistics/statistics_api/`
+- `eventWriterShell`: `src/Statistics/statistics_event_writer/`
+- `batchProcessorShell`: `src/Statistics/statistics_batch_processor/`
+- `sharedPackage`: `src/Statistics/shared/`
+- `configurationFile`: Minimal Python project configuration, such as
+  `src/Statistics/pyproject.toml`
+
+**Validation Rules**:
+
+- Statistics.Api must expose only `/health`.
+- Statistics.Api must use FastAPI for its health-only API shell.
+- Statistics.EventWriter.Worker must start without consuming events.
+- Statistics.BatchProcessor.Worker must start without scheduling jobs or
+  processing batches.
+- Shared Statistics package/module must contain no business logic.
+- Dependency choices must remain minimal.
 
 ## Local Configuration Baseline
 
@@ -103,6 +131,7 @@ foundation changes.
 - Architecture documentation must identify bounded contexts and high-level
   flows.
 - Trade-off documentation must explain the separate Redirect Service, separate
-  Statistics runtimes, shell-first approach, and known Phase 0 limitations.
+  Python Statistics runtimes, shell-first approach, and known Phase 0
+  limitations.
 - Changelog entries must describe repository changes without implying completed
   business behavior.

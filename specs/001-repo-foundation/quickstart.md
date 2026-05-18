@@ -6,6 +6,7 @@ after implementation tasks are completed.
 ## Prerequisites
 
 - .NET SDK 8.0 or newer
+- Python 3.12 or newer
 - Docker Compose v2
 - Git
 
@@ -49,7 +50,8 @@ dotnet restore DistributedUrlShortener.sln
 dotnet build DistributedUrlShortener.sln --no-restore
 ```
 
-Expected result: all Phase 0 projects compile successfully.
+Expected result: all Phase 0 .NET projects in the Shortener bounded context
+compile successfully. The solution must not include Statistics Python projects.
 
 ## Verify API Health Shells
 
@@ -67,12 +69,43 @@ Invoke-WebRequest http://localhost:<shortener-api-port>/health
 Repeat for:
 
 - `src/Shortener/DistributedUrlShortener.Redirect.Service/`
-- `src/Statistics/DistributedUrlShortener.Statistics.Api/`
 
 Expected result: each applicable API shell returns a successful health response.
 For Redirect Service, `/health` is the only allowed Phase 0 endpoint; `GET
 /{shortCode}`, redirect logic, cache lookup, and event publishing must not be
 implemented.
+
+## Verify Statistics Python Shells
+
+Install or run the Statistics shells according to the minimal Python project
+setup under `src/Statistics/`.
+
+```powershell
+python --version
+python -m pip install -e src/Statistics
+```
+
+Start the Statistics API shell and request `/health` from its configured port.
+
+```powershell
+python -m statistics_api
+```
+
+```powershell
+Invoke-WebRequest http://localhost:<statistics-api-port>/health
+```
+
+Start each worker shell separately.
+
+```powershell
+python -m statistics_event_writer
+python -m statistics_batch_processor
+```
+
+Expected result: Statistics.Api returns a successful health response.
+Statistics.EventWriter.Worker starts without consuming events.
+Statistics.BatchProcessor.Worker starts without scheduling jobs or processing
+batches. The shared Statistics package/module contains no business logic.
 
 ## Verify Compose Baseline
 

@@ -1,0 +1,13 @@
+# Phase 0 is a minimal local-development baseline. Phase 1 infrastructure
+# services must extend this file rather than replace it.
+x-phase0:
+  app-environment: ${APP_ENVIRONMENT}
+  shortener-api-http-port: ${SHORTENER_API_HTTP_PORT}
+  redirect-service-http-port: ${REDIRECT_SERVICE_HTTP_PORT}
+  statistics-api-http-port: ${STATISTICS_API_HTTP_PORT}
+
+services: {}
+
+networks:
+  app:
+    name: ${COMPOSE_PROJECT_NAME}-app

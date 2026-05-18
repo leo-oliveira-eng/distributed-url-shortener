@@ -9,16 +9,15 @@ product behavior from later phases.
 
 - `src/Shortener/DistributedUrlShortener.Shortener.Api/`
 - `src/Shortener/DistributedUrlShortener.Redirect.Service/`
-- `src/Statistics/DistributedUrlShortener.Statistics.Api/`
-- `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/`
-- `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/`
-- `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/` as a
-  non-runtime class library
+
+`DistributedUrlShortener.sln` must not include any Python Statistics project or
+package.
 
 Verification command:
 
 ```powershell
-dotnet build DistributedUrlShortener.sln
+dotnet restore DistributedUrlShortener.sln
+dotnet build DistributedUrlShortener.sln --no-restore
 ```
 
 ## API Health Contract
@@ -27,7 +26,7 @@ Applicable API shells:
 
 - Shortener API
 - Redirect Service
-- Statistics.Api
+- Statistics.Api (Python)
 
 Endpoint:
 
@@ -50,16 +49,43 @@ Expected behavior:
 
 Applicable worker shells:
 
-- Statistics.EventWriter.Worker
-- Statistics.BatchProcessor.Worker
+- Statistics.EventWriter.Worker (Python)
+- Statistics.BatchProcessor.Worker (Python)
 
 Expected behavior:
 
-- Builds as a separate executable project.
-- Starts from a minimal `Program.cs`.
+- Starts as a separate Python application shell.
+- Uses Python 3.12+.
+- Starts from a minimal Python module entry point.
 - Uses environment-based configuration.
 - Does not consume events, write object-storage files, schedule jobs, process
   batches, or write analytics data in Phase 0.
+
+## Statistics Python Package Contract
+
+`src/Statistics/` must contain only Python project/package shells for the
+Statistics bounded context.
+
+Expected structure:
+
+- `src/Statistics/statistics_api/`
+- `src/Statistics/statistics_event_writer/`
+- `src/Statistics/statistics_batch_processor/`
+- `src/Statistics/shared/`
+- Minimal Python dependency/configuration files as appropriate, such as
+  `src/Statistics/pyproject.toml`
+
+Expected behavior:
+
+- Statistics.Api exposes only `/health`.
+- Statistics.Api uses FastAPI for the health-only API shell.
+- Statistics.EventWriter.Worker starts without consuming events.
+- Statistics.BatchProcessor.Worker starts without scheduling jobs or processing
+  batches.
+- Shared Statistics package/module contains no business logic.
+- Dependencies remain minimal.
+- No Redpanda, MinIO, DuckDB, ClickHouse, Parquet, scheduling, or dashboard
+  query behavior is implemented in Phase 0.
 
 ## Configuration Contract
 
@@ -97,15 +123,3 @@ Expected behavior:
 - Does not create Cassandra schemas, Redis cache behavior, Redpanda topics,
   MinIO buckets, ClickHouse tables, Keycloak realms, or observability services.
 - Keeps future service boundaries visible and easy to extend.
-
-## Statistics.Infrastructure Contract
-
-`Statistics.Infrastructure` is a class library only.
-
-Expected behavior:
-
-- Builds as a non-executable project.
-- Is included in `DistributedUrlShortener.sln`.
-- Contains no business logic in Phase 0.
-- Does not host workers, APIs, scheduled jobs, consumers, dashboard queries, or
-  analytics processing.

@@ -4,6 +4,10 @@
 
 ### Added
 
+- Added Phase 0 repository foundation files: `.env.example`,
+  `docker-compose.yml`, `DistributedUrlShortener.sln`, architecture
+  documentation, trade-off documentation, runtime shells, and validation
+  commands.
 - Added a portfolio-grade `README.md` describing the distributed URL shortener architecture, key features, scalability model, service responsibilities, analytics pipeline, observability strategy, trade-offs, quick start flow, and project status.
 - Added Spec Kit configuration, templates, workflows, integration manifests, and PowerShell helper scripts under `.specify/`.
 - Added the Git extension package for Spec Kit, including command definitions, configuration templates, and Bash/PowerShell automation scripts.
@@ -19,11 +23,15 @@
 ### Repository Structure
 
 - `src/Front/`
+- `src/ApiGateway/`
+- `src/User/`
 - `src/Shortener/`
-- `src/Statistics/DistributedUrlShortener.Statistics.Api/`
-- `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/`
-- `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/`
-- `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/`
+- `src/Shortener/DistributedUrlShortener.Shortener.Api/`
+- `src/Shortener/DistributedUrlShortener.Redirect.Service/`
+- `src/Statistics/statistics_api/`
+- `src/Statistics/statistics_event_writer/`
+- `src/Statistics/statistics_batch_processor/`
+- `src/Statistics/shared/`
 - `.specify/`
 - `.windsurf/`
 - `docs/`

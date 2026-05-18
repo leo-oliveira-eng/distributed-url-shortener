@@ -32,5 +32,6 @@
 ## Notes
 
 - The standard Spec-Kit quality rule about avoiding implementation details is interpreted for this repository-foundation feature as avoiding unnecessary design details while retaining explicit user-requested and constitution-required constraints such as solution name, runtime separation, and project shells.
+- Correction pass completed: Statistics is specified as Python 3.12+ project/package shells only, and the .NET solution is limited to Shortener bounded-context projects.
 - No clarification questions are required.
 - The specification is ready for `/speckit.plan`.

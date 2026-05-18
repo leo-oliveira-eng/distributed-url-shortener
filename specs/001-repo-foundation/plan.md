@@ -11,41 +11,53 @@
 Create the Phase 0 repository foundation for `distributed-url-shortener`: validate
 the canonical monorepo structure, add missing foundation files, create
 `DistributedUrlShortener.sln`, add separate .NET 8 project shells for the
-Shortener and Statistics runtimes, add a non-runtime Statistics.Infrastructure
-class library, document the intended architecture and
+Shortener runtimes, add separate Python 3.12+ shell projects/packages for the
+Statistics runtimes and shared module, document the intended architecture and
 trade-offs, and provide a safe local configuration baseline. The implementation
 must remain deliberately non-business: no URL creation, redirect resolution,
 event processing, analytics, authentication, dashboard, or Angular behavior.
 
 The technical approach is to create minimal, independently buildable runtime
-shells with explicit folder and project names, basic health endpoints for API
-shells, environment-based configuration, and documentation that makes later
+shells with explicit folder and project/package names, basic health endpoints
+for API shells, environment-based configuration, and documentation that makes later
 phases easy to extend without changing runtime boundaries.
 
 ## Technical Context
 
-**Language/Version**: .NET 8 / C# 12 for Phase 0 runtime shells and
-Statistics.Infrastructure; no NestJS, Angular, Ocelot, or Python implementation
-in this phase  
-**Primary Dependencies**: ASP.NET Core shared framework for API shells,
-Microsoft.Extensions.Hosting for worker shells, Docker Compose for local
-baseline, no external infrastructure packages in Phase 0  
+**Language/Version**: .NET 8 / C# 12 for Shortener API and Redirect Service;
+Python 3.12+ for all Statistics shells and shared package/module; no NestJS,
+Angular, or Ocelot implementation in this phase
+
+**Primary Dependencies**: ASP.NET Core shared framework for .NET API shells,
+FastAPI plus the minimal server dependency needed by the Statistics.Api
+health-only shell, minimal Python runtime dependencies for Statistics worker
+shells, Docker Compose for local baseline, no external infrastructure packages
+in Phase 0
+
 **Storage**: N/A for implementation; Cassandra, Redis, Redpanda, MinIO,
-DuckDB, and ClickHouse are documented only as future architecture components  
-**Testing**: Build verification with `dotnet build`; basic manual health checks
-for applicable API shells; no unit, integration, e2e, or load tests because no
-business behavior exists yet  
-**Target Platform**: Local development on Docker Compose and direct .NET CLI
-execution  
+DuckDB, and ClickHouse are documented only as future architecture components
+
+**Testing**: Build verification with `dotnet build` for Shortener projects;
+Python install/run verification for Statistics shells; basic manual health
+checks for applicable API shells; no unit, integration, e2e, or load tests
+because no business behavior exists yet
+
+**Target Platform**: Local development on Docker Compose, direct .NET CLI
+execution for Shortener, and direct Python execution for Statistics
+
 **Project Type**: Monorepo distributed backend foundation with placeholder
-bounded contexts for future ApiGateway, User API, and Angular frontend work  
+bounded contexts for future ApiGateway, User API, and Angular frontend work
+
 **Performance Goals**: N/A for runtime behavior; Phase 0 success is structural,
-build, documentation, and configuration readiness  
+build, documentation, and configuration readiness
+
 **Constraints**: English documentation, explicit bounded contexts, separate
-executables/processes, non-runtime Statistics.Infrastructure class library,
+executables/processes, Python-only Statistics bounded context, shared
+Statistics Python package/module with no business logic,
 Redirect Service independence, `/health` as the only Redirect Service endpoint
 in Phase 0, no later-phase business behavior, no committed secrets, easy Phase 1
-extension without replacing the Compose baseline  
+extension without replacing the Compose baseline
+
 **Scale/Scope**: Foundation only; the architecture remains aligned with future
 conceptual targets of 100M URL creations/day and 1B redirects/day, but Phase 0
 does not implement scalability mechanisms
@@ -59,10 +71,12 @@ does not implement scalability mechanisms
   `src/Front`; no shared domain logic is introduced.
 - **Frontend Boundary**: PASS. `src/Front/` remains a placeholder only. No
   Angular implementation or direct backend/data-store access is planned.
-- **Runtime Model**: PASS. Shortener API, Redirect Service, Statistics.Api,
+- **Runtime Model**: PASS. Shortener API and Redirect Service are planned as
+  separate .NET executable projects. Statistics.Api is a FastAPI shell.
   Statistics.EventWriter.Worker, and Statistics.BatchProcessor.Worker are
-  planned as separate executable projects. Statistics.Infrastructure is planned
-  as a supporting class library only, not a runtime or executable.
+  planned as separate Python executable application shells, with shared
+  Statistics code limited to a Python package/module that contains no business
+  logic.
 - **Shortener Context**: PASS. Shortener API and Redirect Service are separate
   projects under `src/Shortener/`; no quota, URL management, or redirect
   behavior is implemented.
@@ -122,17 +136,18 @@ src/
       DistributedUrlShortener.Redirect.Service.csproj
       Program.cs
   Statistics/
-    DistributedUrlShortener.Statistics.Api/
-      DistributedUrlShortener.Statistics.Api.csproj
-      Program.cs
-    DistributedUrlShortener.Statistics.EventWriter.Worker/
-      DistributedUrlShortener.Statistics.EventWriter.Worker.csproj
-      Program.cs
-    DistributedUrlShortener.Statistics.BatchProcessor.Worker/
-      DistributedUrlShortener.Statistics.BatchProcessor.Worker.csproj
-      Program.cs
-    DistributedUrlShortener.Statistics.Infrastructure/  # class library only
-      DistributedUrlShortener.Statistics.Infrastructure.csproj
+    pyproject.toml
+    statistics_api/
+      __init__.py
+      main.py
+    statistics_event_writer/
+      __init__.py
+      main.py
+    statistics_batch_processor/
+      __init__.py
+      main.py
+    shared/
+      __init__.py
   Front/
 infra/
 docs/
@@ -147,11 +162,14 @@ tests/
 
 **Structure Decision**: The plan follows the constitution's bounded-context
 layout. Shortener API and Redirect Service both live under `src/Shortener/` but
-are separate projects to preserve independent deployment and scaling. Statistics
-API, event writer, and batch processor live under `src/Statistics/` as separate
-applications because HTTP query serving, continuous event consumption, and batch
-processing have different lifecycles. Statistics.Infrastructure is a class
-library only and must not contain business logic in Phase 0. `src/ApiGateway/`,
+are separate .NET projects to preserve independent deployment and scaling.
+Statistics API, event writer, and batch processor live under `src/Statistics/`
+as separate Python application shells because HTTP query serving, future event
+writing, and future batch processing have different lifecycles. Shared
+Statistics code, if needed in Phase 0, lives only in a Python package/module such
+as `src/Statistics/shared/` and contains no business logic. Statistics.Api uses
+FastAPI only to expose the Phase 0 `/health` endpoint. Statistics Python
+projects are not added to `DistributedUrlShortener.sln`. `src/ApiGateway/`,
 `src/User/`, and `src/Front/` remain placeholders because their implementation
 belongs to later phases.
 
@@ -181,8 +199,8 @@ implementation, the resulting foundation files and project shells.
 - **Frontend Boundary**: PASS. Frontend remains an empty placeholder in this
   plan.
 - **Runtime Model**: PASS. Runtime contracts require separate executable
-  project shells, a non-runtime Statistics.Infrastructure class library, and
-  solution membership.
+  shells, Shortener-only .NET solution membership, Python-only Statistics shells,
+  and a shared Statistics Python package/module with no business logic.
 - **Shortener Context**: PASS. Shortener API and Redirect Service remain
   separate and business-free.
 - **Redirect Fast Path**: PASS. The Redirect Service health shell exposes only

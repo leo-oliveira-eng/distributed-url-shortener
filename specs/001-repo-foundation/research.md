@@ -1,31 +1,31 @@
 # Research: Phase 0 Repository Foundation
 
-## Decision: Use .NET 8 project shells for Phase 0 runtime applications and a class library for Statistics.Infrastructure
+## Decision: Use .NET 8 project shells for Shortener and Python 3.12+ shells for Statistics
 
-**Rationale**: The feature specification explicitly requires real `.NET 8+`
-projects for Shortener API, Redirect Service, Statistics.Api,
-Statistics.EventWriter.Worker, and Statistics.BatchProcessor.Worker, plus a
-real Statistics.Infrastructure project. Statistics.Infrastructure is a class
-library only, not a runtime or executable, and must contain no business logic in
-Phase 0. This satisfies the immediate need for buildable project boundaries and
-keeps all Phase 0 executables consistent while later phases can revisit
-implementation language choices only through an explicit plan and documentation
-update.
+**Rationale**: The corrected Phase 0 boundary requires Shortener API and
+Redirect Service to remain .NET 8+ projects, while everything inside the
+Statistics bounded context is implemented as Python project/package shells.
+Statistics.Api is a FastAPI application shell, Statistics.EventWriter.Worker and
+Statistics.BatchProcessor.Worker are Python worker application shells, and any
+shared Statistics code is a Python package/module with no business logic. This
+keeps runtime ownership explicit without adding Statistics projects to
+`DistributedUrlShortener.sln`.
 
 **Alternatives considered**:
 
-- Use Python for Statistics workers immediately: rejected because the Phase 0
-  specification asks for `.NET 8+` projects and the constitution requires
-  separate runtimes rather than a specific Statistics implementation language.
+- Add Statistics Python projects to the .NET solution: rejected because the
+  solution should include only Phase 0 .NET projects from the Shortener bounded
+  context.
 - Leave Statistics folders as placeholders: rejected because the acceptance
-  criteria require real projects that build.
+  criteria require minimal runnable Python shells.
 
-## Decision: Use minimal ASP.NET Core API shells with `/health`
+## Decision: Use minimal API shells with `/health`
 
 **Rationale**: API shells need to be independently startable and verifiable
-without business behavior. A basic health endpoint confirms that the process can
-start and respond while avoiding dependency checks for services not introduced
-in Phase 0.
+without business behavior. Shortener API and Redirect Service use minimal
+ASP.NET Core health-only shells. Statistics.Api uses a minimal FastAPI shell. A
+basic health endpoint confirms that the process can start and respond while
+avoiding dependency checks for services not introduced in Phase 0.
 
 **Alternatives considered**:
 
@@ -34,20 +34,20 @@ in Phase 0.
 - Add dependency health checks for Cassandra, Redis, Redpanda, MinIO, or
   ClickHouse: rejected because those dependencies are out of Phase 0 scope.
 
-## Decision: Use minimal Generic Host worker shells
+## Decision: Use minimal Python worker shells
 
 **Rationale**: Statistics.EventWriter.Worker and
 Statistics.BatchProcessor.Worker must be separate executable processes, but
 Phase 0 must not consume events, write Parquet files, schedule jobs, or process
-analytics. Minimal Generic Host entry points establish process boundaries
-without fake work.
+analytics. Minimal Python entry points establish process boundaries without fake
+work.
 
 **Alternatives considered**:
 
 - Implement no-op background loops: rejected because loops can look like worker
   behavior and create unnecessary lifecycle complexity.
-- Use class libraries for workers: rejected because the constitution requires
-  separate runtime processes.
+- Use shared Python modules only for workers: rejected because the constitution
+  requires separate runtime processes.
 
 ## Decision: Keep Docker Compose as a minimal app-shell baseline
 
