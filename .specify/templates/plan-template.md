@@ -98,10 +98,10 @@ src/
   User/
   Shortener/
   Statistics/
-    DistributedUrlShortener.Statistics.Api/
-    DistributedUrlShortener.Statistics.EventWriter.Worker/
-    DistributedUrlShortener.Statistics.BatchProcessor.Worker/
-    DistributedUrlShortener.Statistics.Infrastructure/
+    statistics_api/
+    statistics_event_writer/
+    statistics_batch_processor/
+    shared/
   Front/
 infra/
   nginx/
