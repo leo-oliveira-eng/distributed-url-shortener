@@ -431,8 +431,3 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
-
-
-.ai/*
-.specify/*
-.windsurf/*
