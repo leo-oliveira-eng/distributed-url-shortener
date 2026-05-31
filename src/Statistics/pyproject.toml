@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "distributed-url-shortener-statistics"
+version = "0.1.0"
+description = "Phase 0 Python Statistics runtime shells for distributed-url-shortener."
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115,<1.0",
+  "uvicorn[standard]>=0.34,<1.0"
+]
+
+[tool.setuptools]
+packages = [
+  "statistics_api",
+  "statistics_event_writer",
+  "statistics_batch_processor",
+  "shared"
+]
+py-modules = [
+  "event_writer_worker",
+  "batch_processor_worker"
+]
+

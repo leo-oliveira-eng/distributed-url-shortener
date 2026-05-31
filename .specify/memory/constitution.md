@@ -1,9 +1,13 @@
 <!--
 Sync Impact Report
-Version change: 1.0.0 -> 1.0.1
 Modified principles:
 - I. Portfolio-Grade Distributed System Clarity: added an English-only
   documentation constraint
+- V. Observable, Testable, Reproducible Services: made runtime observability
+  requirements phase-aware so Phase 0 shells require health and documented
+  configuration while business-capable runtimes require telemetry
+- Architecture Constraints: aligned canonical Statistics package paths with the
+  implemented Python runtime structure
 Added principles:
 - None
 Added sections:
@@ -15,14 +19,22 @@ Templates requiring updates:
   English
 - reviewed: .specify/templates/spec-template.md; future generated docs must be
   English
-- reviewed: .specify/templates/tasks-template.md; future generated docs must be
-  English
+- updated: .specify/templates/plan-template.md; Statistics paths use
+  statistics_api, statistics_event_writer, statistics_batch_processor, and
+  shared
+- updated: .specify/templates/tasks-template.md; Statistics paths use
+  statistics_api, statistics_event_writer, statistics_batch_processor, and
+  shared
 - reviewed: .specify/templates/checklist-template.md; future generated docs
   must be English
 - not present: .specify/templates/commands/*.md
 Runtime guidance:
 - updated: README.md with a roadmap section
 - updated: docs/roadmap.md translated to English
+- updated: Phase 0 docs/specs to use Shortener.Api and Redirect.Service project
+  paths
+- reviewed: Phase 0 observability scope remains health endpoints and documented
+  configuration; complete local observability remains a Phase 10 deliverable
 Deferred TODOs:
 - None
 -->
@@ -115,13 +127,18 @@ Rationale: analytics exists to demonstrate event-driven processing and OLAP
 modeling without putting the redirect experience at risk.
 
 ### V. Observable, Testable, Reproducible Services
-All runtime applications MUST produce structured logs, expose meaningful metrics,
-and emit or propagate distributed traces through OpenTelemetry where practical.
-Logs, metrics, and traces MUST include correlation identifiers when available.
+Phase 0 runtime shells MUST expose basic health endpoints where applicable and
+MUST use documented environment-based configuration. When a runtime introduces
+business behavior or infrastructure dependencies, it MUST produce structured
+logs, expose meaningful metrics, and emit or propagate distributed traces
+through OpenTelemetry where practical. Logs, metrics, and traces MUST include
+correlation identifiers when available. The complete local observability stack
+MUST be introduced in Phase 10.
+
 Important metrics include redirect request count, redirect latency, Redis
-hit/miss rate, Cassandra lookup latency, click event publication failures, broker
-consumer lag, raw files processed, batch duration, events processed, aggregates
-generated, ClickHouse query latency, and dashboard query errors.
+hit/miss rate, Cassandra lookup latency, click event publication failures,
+broker consumer lag, raw files processed, batch duration, events processed,
+aggregates generated, ClickHouse query latency, and dashboard query errors.
 
 Local development MUST be reproducible with Docker Compose. Runtime applications
 MUST use documented environment variables, provide `.env.example` entries for
@@ -189,10 +206,10 @@ MUST be composed of independent applications:
 
 ```text
 src/Statistics/
-  DistributedUrlShortener.Statistics.Api/
-  DistributedUrlShortener.Statistics.EventWriter.Worker/
-  DistributedUrlShortener.Statistics.BatchProcessor.Worker/
-  DistributedUrlShortener.Statistics.Infrastructure/
+  statistics_api/
+  statistics_event_writer/
+  statistics_batch_processor/
+  shared/
 ```
 
 Statistics.Api (Dashboard API) MUST expose dashboard endpoints, query ClickHouse
@@ -226,10 +243,10 @@ src/
   User/
   Shortener/
   Statistics/
-    DistributedUrlShortener.Statistics.Api/
-    DistributedUrlShortener.Statistics.EventWriter.Worker/
-    DistributedUrlShortener.Statistics.BatchProcessor.Worker/
-    DistributedUrlShortener.Statistics.Infrastructure/
+    statistics_api/
+    statistics_event_writer/
+    statistics_batch_processor/
+    shared/
   Front/
 infra/
   nginx/
@@ -320,4 +337,4 @@ redirect path independence, separate runtime execution models, frontend/API
 Gateway separation, Cassandra modeling, analytics non-blocking behavior,
 observability, testing, reproducible local setup, and documentation impacts.
 
-**Version**: 1.0.0 | **Ratified**: 2026-04-26 | **Last Amended**: 2026-04-26
+**Version**: 1.1.0 | **Ratified**: 2026-04-26 | **Last Amended**: 2026-05-30

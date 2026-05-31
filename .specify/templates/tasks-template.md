@@ -31,10 +31,10 @@ implementation and testing of each story.
 - ApiGateway: `src/ApiGateway/`
 - User service: `src/User/`
 - Shortener API / Redirect Service: `src/Shortener/`
-- Statistics.Api (Dashboard API): `src/Statistics/DistributedUrlShortener.Statistics.Api/`
-- Statistics.EventWriter.Worker: `src/Statistics/DistributedUrlShortener.Statistics.EventWriter.Worker/`
-- Statistics.BatchProcessor.Worker: `src/Statistics/DistributedUrlShortener.Statistics.BatchProcessor.Worker/`
-- Statistics.Infrastructure: `src/Statistics/DistributedUrlShortener.Statistics.Infrastructure/`
+- Statistics.Api (Dashboard API): `src/Statistics/statistics_api/`
+- Statistics.EventWriter.Worker: `src/Statistics/statistics_event_writer/`
+- Statistics.BatchProcessor.Worker: `src/Statistics/statistics_batch_processor/`
+- Statistics shared package: `src/Statistics/shared/`
 - Frontend: `src/Front/`
 - Infrastructure: `infra/`
 - Documentation: `docs/`
