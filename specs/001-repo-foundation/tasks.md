@@ -32,11 +32,11 @@
 
 **Purpose**: Prepare shared repository scaffolding and avoid trampling existing user work.
 
-- [ ] T001 Inspect existing files and placeholders in `src/`, `infra/`, `docs/`, `scripts/`, `tests/`, `CHANGELOG.md`, `.gitignore`, and `.windsurf/` before editing.
-- [ ] T002 [P] Create or validate root foundation folders `src/`, `infra/`, `docs/`, `scripts/`, and `tests/`.
-- [ ] T003 [P] Create or validate bounded-context placeholders `src/ApiGateway/`, `src/User/`, `src/Shortener/`, `src/Statistics/`, and `src/Front/`.
-- [ ] T004 [P] Create or validate test category placeholders `tests/e2e/`, `tests/integration/`, and `tests/load/`.
-- [ ] T005 Add `.gitkeep` placeholders only where needed in empty folders under `src/ApiGateway/`, `src/User/`, `src/Front/`, `infra/`, `scripts/`, `tests/e2e/`, `tests/integration/`, and `tests/load/`.
+- [x] T001 Inspect existing files and placeholders in `src/`, `infra/`, `docs/`, `scripts/`, `tests/`, `CHANGELOG.md`, `.gitignore`, and `.windsurf/` before editing.
+- [x] T002 [P] Create or validate root foundation folders `src/`, `infra/`, `docs/`, `scripts/`, and `tests/`.
+- [x] T003 [P] Create or validate bounded-context placeholders `src/ApiGateway/`, `src/User/`, `src/Shortener/`, `src/Statistics/`, and `src/Front/`.
+- [x] T004 [P] Create or validate test category placeholders `tests/e2e/`, `tests/integration/`, and `tests/load/`.
+- [x] T005 Add `.gitkeep` placeholders only where needed in empty folders under `src/ApiGateway/`, `src/User/`, `src/Front/`, `infra/`, `scripts/`, `tests/e2e/`, `tests/integration/`, and `tests/load/`.
 
 ---
 
@@ -46,12 +46,12 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T006 Create `DistributedUrlShortener.sln` at the repository root.
-- [ ] T007 Create or update `.env.example` with safe Phase 0 variables for compose project name, environment, and API shell ports.
-- [ ] T008 Create initial `docker-compose.yml` at the repository root using `.env.example` variables without adding Cassandra, Redis, Redpanda, MinIO, ClickHouse, Keycloak, or observability services.
-- [ ] T009 Create `docs/architecture.md` sections for bounded contexts, request flow, redirect independence, authenticated API flow, analytics flow, and Phase 0 limitations.
-- [ ] T010 Create `docs/tradeoffs.md` sections for Redirect Service separation, Statistics runtime separation, shell-first implementation, Compose baseline, and known Phase 0 limitations.
-- [ ] T011 Update `CHANGELOG.md` under `Unreleased` to reserve entries for Phase 0 foundation files, solution, project shells, documentation, and validation.
+- [x] T006 Create `DistributedUrlShortener.sln` at the repository root.
+- [x] T007 Create or update `.env.example` with safe Phase 0 variables for compose project name, environment, and API shell ports.
+- [x] T008 Create initial `docker-compose.yml` at the repository root using `.env.example` variables without adding Cassandra, Redis, Redpanda, MinIO, ClickHouse, Keycloak, or observability services.
+- [x] T009 Create `docs/architecture.md` sections for bounded contexts, request flow, redirect independence, authenticated API flow, analytics flow, and Phase 0 limitations.
+- [x] T010 Create `docs/tradeoffs.md` sections for Redirect Service separation, Statistics runtime separation, shell-first implementation, Compose baseline, and known Phase 0 limitations.
+- [x] T011 Update `CHANGELOG.md` under `Unreleased` to reserve entries for Phase 0 foundation files, solution, project shells, documentation, and validation.
 
 **Checkpoint**: Foundation prerequisites are ready; user story implementation can begin.
 
@@ -65,14 +65,14 @@
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create `src/Shortener/Shortener.Api/` for the Shortener API runtime shell.
-- [ ] T013 [P] [US1] Create `src/Shortener/Redirect.Service/` for the Redirect Service runtime shell.
-- [ ] T014 [P] [US1] Create `src/Statistics/statistics_api/` for the Statistics.Api Python FastAPI shell.
-- [ ] T015 [P] [US1] Create `src/Statistics/statistics_event_writer/` for the Statistics.EventWriter.Worker Python worker shell.
-- [ ] T016 [P] [US1] Create `src/Statistics/statistics_batch_processor/` for the Statistics.BatchProcessor.Worker Python worker shell.
-- [ ] T017 [P] [US1] Create `src/Statistics/shared/` for shared Statistics Python package/module code with no business logic.
-- [ ] T018 [US1] Remove obsolete `.gitkeep` placeholders from folders that now contain real project files under `src/Shortener/` and `src/Statistics/`.
-- [ ] T019 [US1] Verify repository structure against `specs/001-repo-foundation/spec.md` and `specs/001-repo-foundation/data-model.md`.
+- [x] T012 [P] [US1] Create `src/Shortener/Shortener.Api/` for the Shortener API runtime shell.
+- [x] T013 [P] [US1] Create `src/Shortener/Redirect.Service/` for the Redirect Service runtime shell.
+- [x] T014 [P] [US1] Create `src/Statistics/statistics_api/` for the Statistics.Api Python FastAPI shell.
+- [x] T015 [P] [US1] Create `src/Statistics/statistics_event_writer/` for the Statistics.EventWriter.Worker Python worker shell.
+- [x] T016 [P] [US1] Create `src/Statistics/statistics_batch_processor/` for the Statistics.BatchProcessor.Worker Python worker shell.
+- [x] T017 [P] [US1] Create `src/Statistics/shared/` for shared Statistics Python package/module code with no business logic.
+- [x] T018 [US1] Remove obsolete `.gitkeep` placeholders from folders that now contain real project files under `src/Shortener/` and `src/Statistics/`.
+- [x] T019 [US1] Verify repository structure against `specs/001-repo-foundation/spec.md` and `specs/001-repo-foundation/data-model.md`.
 
 **Checkpoint**: User Story 1 is complete when all required structure exists and no runtime boundary is ambiguous.
 
@@ -86,26 +86,26 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 [P] [US2] Create minimal web project file `src/Shortener/Shortener.Api/Shortener.Api.csproj`.
-- [ ] T021 [P] [US2] Create minimal web project file `src/Shortener/Redirect.Service/Redirect.Service.csproj`.
-- [ ] T022 [P] [US2] Create minimal Python project configuration `src/Statistics/pyproject.toml` for Statistics shells using Python 3.12+, including FastAPI and the minimal server dependency for Statistics.Api.
-- [ ] T023 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_api/__init__.py`.
-- [ ] T024 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_event_writer/__init__.py`.
-- [ ] T025 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_batch_processor/__init__.py`.
-- [ ] T026 [P] [US2] Create minimal health-only startup in `src/Shortener/Shortener.Api/Program.cs`.
-- [ ] T027 [P] [US2] Create minimal `/health`-only startup in `src/Shortener/Redirect.Service/Program.cs` without `GET /{shortCode}`, redirect logic, cache lookup, or event publishing.
-- [ ] T028 [P] [US2] Create minimal health-only FastAPI startup in `src/Statistics/statistics_api/main.py`.
-- [ ] T029 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_event_writer/main.py` that starts without consuming events.
-- [ ] T030 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_batch_processor/main.py` that starts without scheduling jobs or processing batches.
-- [ ] T031 [P] [US2] Create minimal package marker `src/Statistics/shared/__init__.py` with no business logic.
-- [ ] T032 [US2] Add only the Shortener API and Redirect Service .NET project files to `DistributedUrlShortener.sln`.
-- [ ] T033 [US2] Ensure Shortener API and Redirect Service project files use environment-based configuration and nullable reference types where applicable.
-- [ ] T034 [US2] Run `dotnet restore DistributedUrlShortener.sln` from the repository root.
-- [ ] T035 [US2] Run `dotnet build DistributedUrlShortener.sln --no-restore` from the repository root.
-- [ ] T036 [US2] Manually verify `/health` for `src/Shortener/Shortener.Api/Shortener.Api.csproj`.
-- [ ] T037 [US2] Manually verify `/health` for `src/Shortener/Redirect.Service/Redirect.Service.csproj`.
-- [ ] T038 [US2] Install or run the Python Statistics shells according to `src/Statistics/pyproject.toml` and manually verify `/health` for `src/Statistics/statistics_api/main.py`.
-- [ ] T039 [US2] Verify worker shells start without performing business work in `src/Statistics/statistics_event_writer/main.py` and `src/Statistics/statistics_batch_processor/main.py`.
+- [x] T020 [P] [US2] Create minimal web project file `src/Shortener/Shortener.Api/Shortener.Api.csproj`.
+- [x] T021 [P] [US2] Create minimal web project file `src/Shortener/Redirect.Service/Redirect.Service.csproj`.
+- [x] T022 [P] [US2] Create minimal Python project configuration `src/Statistics/pyproject.toml` for Statistics shells using Python 3.12+, including FastAPI and the minimal server dependency for Statistics.Api.
+- [x] T023 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_api/__init__.py`.
+- [x] T024 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_event_writer/__init__.py`.
+- [x] T025 [P] [US2] Create minimal Python package marker `src/Statistics/statistics_batch_processor/__init__.py`.
+- [x] T026 [P] [US2] Create minimal health-only startup in `src/Shortener/Shortener.Api/Program.cs`.
+- [x] T027 [P] [US2] Create minimal `/health`-only startup in `src/Shortener/Redirect.Service/Program.cs` without `GET /{shortCode}`, redirect logic, cache lookup, or event publishing.
+- [x] T028 [P] [US2] Create minimal health-only FastAPI startup in `src/Statistics/statistics_api/main.py`.
+- [x] T029 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_event_writer/main.py` that starts without consuming events.
+- [x] T030 [P] [US2] Create minimal Python worker startup in `src/Statistics/statistics_batch_processor/main.py` that starts without scheduling jobs or processing batches.
+- [x] T031 [P] [US2] Create minimal package marker `src/Statistics/shared/__init__.py` with no business logic.
+- [x] T032 [US2] Add only the Shortener API and Redirect Service .NET project files to `DistributedUrlShortener.sln`.
+- [x] T033 [US2] Ensure Shortener API and Redirect Service project files use environment-based configuration and nullable reference types where applicable.
+- [x] T034 [US2] Run `dotnet restore DistributedUrlShortener.sln` from the repository root.
+- [x] T035 [US2] Run `dotnet build DistributedUrlShortener.sln --no-restore` from the repository root.
+- [x] T036 [US2] Manually verify `/health` for `src/Shortener/Shortener.Api/Shortener.Api.csproj`.
+- [x] T037 [US2] Manually verify `/health` for `src/Shortener/Redirect.Service/Redirect.Service.csproj`.
+- [x] T038 [US2] Install or run the Python Statistics shells according to `src/Statistics/pyproject.toml` and manually verify `/health` for `src/Statistics/statistics_api/main.py`.
+- [x] T039 [US2] Verify worker shells start without performing business work in `src/Statistics/statistics_event_writer/main.py` and `src/Statistics/statistics_batch_processor/main.py`.
 
 **Checkpoint**: User Story 2 is complete when the Shortener solution builds, the Statistics Python shells install or start, and all runtime shells satisfy `specs/001-repo-foundation/contracts/phase0-runtime-contracts.md`.
 
@@ -119,11 +119,11 @@
 
 ### Implementation for User Story 3
 
-- [ ] T040 [US3] Align `.env.example` variables with API shell ports and application environment used by `docker-compose.yml`.
-- [ ] T041 [US3] Define only minimal application shell services or a minimal baseline in `docker-compose.yml` without adding Cassandra, Redis, Redpanda, MinIO, ClickHouse, Keycloak, or observability services.
-- [ ] T042 [US3] Add comments in `docker-compose.yml` that require Phase 1 infrastructure to extend this file rather than replace it, without embedding secrets or fake infrastructure behavior.
-- [ ] T043 [US3] Run `docker compose --env-file .env.example config` from the repository root.
-- [ ] T044 [US3] Verify `.env.example` and `docker-compose.yml` contain no real secrets, tokens, private endpoints, or production credentials.
+- [x] T040 [US3] Align `.env.example` variables with API shell ports and application environment used by `docker-compose.yml`.
+- [x] T041 [US3] Define only minimal application shell services or a minimal baseline in `docker-compose.yml` without adding Cassandra, Redis, Redpanda, MinIO, ClickHouse, Keycloak, or observability services.
+- [x] T042 [US3] Add comments in `docker-compose.yml` that require Phase 1 infrastructure to extend this file rather than replace it, without embedding secrets or fake infrastructure behavior.
+- [x] T043 [US3] Run `docker compose --env-file .env.example config` from the repository root.
+- [x] T044 [US3] Verify `.env.example` and `docker-compose.yml` contain no real secrets, tokens, private endpoints, or production credentials.
 
 **Checkpoint**: User Story 3 is complete when Compose renders successfully and the local configuration baseline is safe and easy to extend.
 
@@ -137,17 +137,17 @@
 
 ### Implementation for User Story 4
 
-- [ ] T045 [US4] Write high-level architecture overview in `docs/architecture.md`.
-- [ ] T046 [US4] Document bounded contexts ApiGateway, User, Shortener, Statistics, and Front in `docs/architecture.md`.
-- [ ] T047 [US4] Document future public `GET /{shortCode}` ownership by Redirect Service outside ApiGateway in `docs/architecture.md`, and state that Phase 0 allows only `/health`.
-- [ ] T048 [US4] Document authenticated API flow through ApiGateway in `docs/architecture.md`.
-- [ ] T049 [US4] Document planned high-level analytics flow in `docs/architecture.md` without claiming analytics implementation.
-- [ ] T050 [US4] Document why Redirect Service is separate from Shortener API in `docs/tradeoffs.md`.
-- [ ] T051 [US4] Document why Statistics.Api, Statistics.EventWriter.Worker, and Statistics.BatchProcessor.Worker are separate Python runtimes, and why shared Statistics code is a Python package/module with no business logic, in `docs/tradeoffs.md`.
-- [ ] T052 [US4] Document why Phase 0 creates buildable shells before business behavior in `docs/tradeoffs.md`.
-- [ ] T053 [US4] Document known Phase 0 limitations and out-of-scope behavior in `docs/tradeoffs.md`.
-- [ ] T054 [US4] Update `README.md` only if needed to point to `docs/architecture.md`, `docs/tradeoffs.md`, and the Phase 0 local verification flow.
-- [ ] T055 [US4] Update `CHANGELOG.md` with completed Phase 0 foundation documentation changes.
+- [x] T045 [US4] Write high-level architecture overview in `docs/architecture.md`.
+- [x] T046 [US4] Document bounded contexts ApiGateway, User, Shortener, Statistics, and Front in `docs/architecture.md`.
+- [x] T047 [US4] Document future public `GET /{shortCode}` ownership by Redirect Service outside ApiGateway in `docs/architecture.md`, and state that Phase 0 allows only `/health`.
+- [x] T048 [US4] Document authenticated API flow through ApiGateway in `docs/architecture.md`.
+- [x] T049 [US4] Document planned high-level analytics flow in `docs/architecture.md` without claiming analytics implementation.
+- [x] T050 [US4] Document why Redirect Service is separate from Shortener API in `docs/tradeoffs.md`.
+- [x] T051 [US4] Document why Statistics.Api, Statistics.EventWriter.Worker, and Statistics.BatchProcessor.Worker are separate Python runtimes, and why shared Statistics code is a Python package/module with no business logic, in `docs/tradeoffs.md`.
+- [x] T052 [US4] Document why Phase 0 creates buildable shells before business behavior in `docs/tradeoffs.md`.
+- [x] T053 [US4] Document known Phase 0 limitations and out-of-scope behavior in `docs/tradeoffs.md`.
+- [x] T054 [US4] Update `README.md` only if needed to point to `docs/architecture.md`, `docs/tradeoffs.md`, and the Phase 0 local verification flow.
+- [x] T055 [US4] Update `CHANGELOG.md` with completed Phase 0 foundation documentation changes.
 
 **Checkpoint**: User Story 4 is complete when a reviewer can identify runtime boundaries and Phase 0 limitations from documentation in under 5 minutes.
 
@@ -157,11 +157,11 @@
 
 **Purpose**: Cross-cutting quality gates that affect multiple user stories.
 
-- [ ] T056 [P] Verify all generated project docs and project-doc comments are in English in `README.md`, `docs/architecture.md`, `docs/tradeoffs.md`, `CHANGELOG.md`, and `specs/001-repo-foundation/tasks.md`.
-- [ ] T057 [P] Verify no later-phase business behavior exists in `src/Shortener/Shortener.Api/Program.cs`, `src/Shortener/Redirect.Service/Program.cs`, `src/Statistics/statistics_api/main.py`, `src/Statistics/statistics_event_writer/main.py`, `src/Statistics/statistics_batch_processor/main.py`, and `src/Statistics/shared/__init__.py`.
-- [ ] T058 Verify quickstart steps in `specs/001-repo-foundation/quickstart.md` from a clean terminal session.
-- [ ] T059 Verify acceptance criteria from `specs/001-repo-foundation/spec.md` against the final repository state.
-- [ ] T060 Run `git status --short` and review changed files to confirm no unrelated user work was reverted.
+- [x] T056 [P] Verify all generated project docs and project-doc comments are in English in `README.md`, `docs/architecture.md`, `docs/tradeoffs.md`, `CHANGELOG.md`, and `specs/001-repo-foundation/tasks.md`.
+- [x] T057 [P] Verify no later-phase business behavior exists in `src/Shortener/Shortener.Api/Program.cs`, `src/Shortener/Redirect.Service/Program.cs`, `src/Statistics/statistics_api/main.py`, `src/Statistics/statistics_event_writer/main.py`, `src/Statistics/statistics_batch_processor/main.py`, and `src/Statistics/shared/__init__.py`.
+- [x] T058 Verify quickstart steps in `specs/001-repo-foundation/quickstart.md` from a clean terminal session.
+- [x] T059 Verify acceptance criteria from `specs/001-repo-foundation/spec.md` against the final repository state.
+- [x] T060 Run `git status --short` and review changed files to confirm no unrelated user work was reverted.
 
 ---
 
